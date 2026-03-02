@@ -1,0 +1,55 @@
+.env
+.gitignore
+components.json
+db.ts
+MOCK_API_GUIDE.md
+next-env.d.ts
+next.config.mjs
+package.json
+postcss.config.mjs
+prisma.config.ts
+README.md
+tsconfig.json
+.next/
+  dev/
+app/
+  globals.css
+  layout.tsx
+  page.tsx
+  api/
+    debts/
+    sales/
+    stocks/
+calculations/
+  debtCalculations.ts
+  saleCalculations.ts
+  stockCalculations.ts
+components/
+  dashboard-cards.tsx
+  theme-provider.tsx
+  forms/
+  ui/
+    chart.tsx
+hooks/
+  use-mobile.ts
+  use-toast.ts
+lib/
+  calculations.ts
+  mock-api.ts
+  mock-data.ts
+  schemas.ts
+  utils/
+    string.ts
+    ...
+prisma/
+  schema.prisma
+  migrations/
+repositories/
+  debt.repository.ts
+  sale.repository.ts
+  stock.repository.ts
+services/
+  debt.service.ts
+  sale.service.ts
+  stock.service.ts
+styles/

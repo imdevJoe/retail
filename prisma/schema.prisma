@@ -1,0 +1,115 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// model Supplier {
+//   id        String     @id @default(cuid())
+//   name      String
+//   phone     String?
+//   createdAt DateTime   @default(now())
+
+//   deliveries  Delivery[]
+//   saleEntries SaleEntry[]
+//   payments    Payment[]
+
+//   @@map("suppliers")
+// }
+
+// model Delivery {
+//   id                 String    @id @default(cuid())
+//   supplierId         String
+//   supplier           Supplier  @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+//   quantityReceived   Int
+//   quantityRemaining  Int
+//   costPrice          Float     // cost per unit
+//   dateReceived       DateTime  @default(now())
+//   isCompleted        Boolean   @default(false)
+//   createdAt          DateTime  @default(now())
+
+//   saleEntries SaleEntry[]
+
+//   @@map("deliveries")
+// }
+
+// model DailySale {
+//   id        String      @id @default(cuid())
+//   date      DateTime
+//   createdAt DateTime    @default(now())
+
+//   saleEntries SaleEntry[]
+
+//   @@map("daily_sales")
+// }
+
+// model SaleEntry {
+//   id           String    @id @default(cuid())
+//   dailySaleId  String
+//   dailySale    DailySale @relation(fields: [dailySaleId], references: [id], onDelete: Cascade)
+//   supplierId   String
+//   supplier     Supplier  @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+//   deliveryId   String?
+//   delivery     Delivery? @relation(fields: [deliveryId], references: [id])
+//   quantitySold Int
+//   sellingPrice Float     // selling price per unit
+//   totalRevenue Float
+//   createdAt    DateTime  @default(now())
+
+//   @@map("sale_entries")
+// }
+
+// model Payment {
+//   id         String   @id @default(cuid())
+//   supplierId String
+//   supplier   Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+//   amount     Float
+//   date       DateTime @default(now())
+//   createdAt  DateTime @default(now())
+
+//   @@map("payments")
+// }
+
+
+model Stock {
+  id               String   @id @default(uuid())
+  productName      String
+  ownerName        String
+  numberOfBags     Int
+  estimatedRevenue Float
+  status           StockStatus @default(ACTIVE)
+  createdAt        DateTime @default(now())
+
+  sales  Sale[]
+  debts  Debt[]
+}
+
+model Sale {
+  id       String   @id @default(uuid())
+  stockId  String
+  amount   Float
+  date     DateTime @default(now())
+
+  stock    Stock @relation(fields: [stockId], references: [id])
+}
+
+model Debt {
+  id         String   @id @default(uuid())
+  stockId    String
+  debtorName String
+  amount     Float
+  date       DateTime @default(now())
+  isPaid     Boolean  @default(false)
+
+  stock      Stock @relation(fields: [stockId], references: [id])
+}
+
+enum StockStatus {
+  ACTIVE
+  SOLD_OUT
+}
